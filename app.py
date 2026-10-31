@@ -81,6 +81,34 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+# Compact breakdown: one thin stacked bar + a single legend line
+cb = solution["cost_breakdown"]
+parts = [
+    ("Capex (annualised)", cb["capex_annualised_usd"], "#1f77b4"),
+    ("Fixed O&M",          cb["fixed_opex_usd"],       "#6baed6"),
+    ("Variable O&M",       cb["variable_opex_usd"],    "#ff7f0e"),
+    ("Trucking",           cb["trucking_usd"],         "#2ca02c"),
+    ("Barge",              cb["barge_usd"],            "#9467bd"),
+]
+parts = [p for p in parts if p[1] > 0]
+denom = sum(v for _, v, _ in parts) or 1.0
+bar = "".join(
+    f"<div title='{name}: ${v/1e6:,.1f} M' "
+    f"style='width:{v/denom*100:.2f}%;background:{c};'></div>"
+    for name, v, c in parts
+)
+legend = " &nbsp;·&nbsp; ".join(
+    f"<span style='color:{c};'>■</span> {name} "
+    f"<b>${v/1e6:,.1f} M</b> <span style='color:#888;'>({v/denom:.0%})</span>"
+    for name, v, c in parts
+)
+st.markdown(
+    f"<div style='display:flex;height:8px;border-radius:4px;overflow:hidden;"
+    f"max-width:900px;margin-bottom:0.4rem;'>{bar}</div>"
+    f"<div style='font-size:0.85rem;margin-bottom:0.8rem;'>{legend}</div>",
+    unsafe_allow_html=True,
+)
+
 # ---------------------------------------------------------------------------
 # 2. Facility counts
 # ---------------------------------------------------------------------------
