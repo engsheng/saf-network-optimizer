@@ -1,0 +1,14 @@
+# Core: PuLP 2.9.x ships bundled CBC, so this file alone gives you a
+# working solver without any extra install. CBC solves this instance in
+# a couple of minutes.
+pulp>=2.9,<3
+
+# Optional but recommended: HiGHS is roughly 5-10x faster than CBC on
+# this MILP (solves in seconds instead of minutes). The runner will
+# prefer it if available and silently fall back to CBC otherwise.
+highspy>=1.5
+
+# Data
+pandas>=2.0
+openpyxl>=3.1
+numpy>=1.24
