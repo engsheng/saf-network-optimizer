@@ -12,3 +12,8 @@ highspy>=1.5
 pandas>=2.0
 openpyxl>=3.1
 numpy>=1.24
+
+# Dashboard (streamlit app.py)
+streamlit>=1.31
+pydeck>=0.9
+plotly>=5.18

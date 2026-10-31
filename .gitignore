@@ -24,3 +24,7 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+
+# Dashboard
+.streamlit/secrets.toml
+data/cached_solution.json

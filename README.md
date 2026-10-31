@@ -218,3 +218,35 @@ not an error.
 ## License
 
 Public hackathon code; see `LICENSE` (to be added).
+
+---
+
+## Interactive dashboard
+
+A Streamlit dashboard renders the solved network: Kalimantan map with depots, refineries, airports and flow arcs; cost breakdown vs an import baseline; facility and flow tables; and CSV / JSON exports.
+
+```bash
+pip install -r requirements.txt   # now includes streamlit, pydeck, plotly
+streamlit run app.py
+```
+
+Opens at `http://localhost:8501`. The dashboard tries three load paths in order:
+
+1. `results.json` at the repo root (produced by `python run.py`) — instant
+2. `data/cached_solution.json` (written by the dashboard after every solve) — instant
+3. Fresh in-process solve via `src/adapter.solve()` (~60–120 s with HiGHS)
+
+The sidebar's **▶ Re-solve** button re-runs the MILP with the current scenario (solver time limit, MIP gap, airport-candidate toggle).
+
+### Layout added for the dashboard
+
+```
+app.py              # Streamlit entry
+src/
+  schema.py         # Solution JSON contract read by the viz
+  data_loader.py    # Airports + biomass (delegates to saf.data for ID consistency)
+  adapter.py        # Wraps saf.build_model → dashboard Solution dict
+  visualizer.py     # pydeck map, plotly cost chart, tables
+```
+
+The dashboard calls directly into the `saf` package — no code is duplicated.
