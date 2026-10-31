@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
-from typing import Any, Dict, List
+import math
+import sys
+from typing import Any, Dict, List, Optional
 
 import pulp
 
@@ -14,11 +16,36 @@ def _val(v) -> float:
     return 0.0 if val is None else float(val)
 
 
+def optimality_status(model: pulp.LpProblem) -> str:
+    """Classify a solved model as proven_optimal / time_limited_incumbent / no_solution.
+
+    PuLP's HiGHS wrapper reports LpStatusOptimal for time-limited runs too;
+    only sol_status tells a proven optimum from an incumbent with an open gap.
+    """
+    if model.status == pulp.LpStatusOptimal:
+        if model.sol_status == pulp.LpSolutionOptimal:
+            return "proven_optimal"
+        if model.sol_status == pulp.LpSolutionIntegerFeasible:
+            return "time_limited_incumbent"
+    return "no_solution"
+
+
+def mip_gap_rel(model: pulp.LpProblem) -> Optional[float]:
+    """Relative MIP gap reported by HiGHS, or None if unavailable (e.g. CBC)."""
+    try:
+        gap = float(model.solverModel.getInfo().mip_gap)
+    except Exception:
+        return None
+    return gap if math.isfinite(gap) else None
+
+
 def extract_results(
     built: Dict[str, Any],
     farms: List[Farm],
     airports: List[Airport],
     flow_tol: float = 1e-4,
+    optimality_status: Optional[str] = None,
+    mip_gap_rel: Optional[float] = None,
 ) -> Dict[str, Any]:
     """Return a plain-dict snapshot of the solution for JSON serialisation."""
     model = built["model"]
@@ -102,6 +129,8 @@ def extract_results(
     total = sum(cost_breakdown.values())
 
     return {
+        "optimality_status": optimality_status,
+        "mip_gap_rel": mip_gap_rel,
         "total_annual_cost_usd": total,
         "cost_breakdown_usd": cost_breakdown,
         "depots_opened": depots,
@@ -117,14 +146,27 @@ def print_summary(
     built: Dict[str, Any],
     farms: List[Farm],
     airports: List[Airport],
+    optimality_status: Optional[str] = None,
+    mip_gap_rel: Optional[float] = None,
 ) -> None:
     """Human-readable summary to stdout."""
-    results = extract_results(built, farms, airports)
+    results = extract_results(built, farms, airports,
+                              optimality_status=optimality_status,
+                              mip_gap_rel=mip_gap_rel)
     total = results["total_annual_cost_usd"]
 
+    gap_txt = "unknown" if mip_gap_rel is None else f"{mip_gap_rel:.2%}"
+    if optimality_status == "proven_optimal":
+        banner, color = f"PROVEN OPTIMAL -- gap closed (gap {gap_txt})", "\033[32m"
+    else:
+        banner, color = f"INCUMBENT ONLY -- gap {gap_txt}", "\033[33m"
     print()
+    if optimality_status is not None:
+        print(f"{color}{banner}\033[0m" if sys.stdout.isatty() else banner)
     print("=" * 68)
-    print("  SAF SUPPLY CHAIN -- OPTIMAL SOLUTION")
+    print("  SAF SUPPLY CHAIN -- "
+          + ("OPTIMAL SOLUTION" if optimality_status in (None, "proven_optimal")
+             else "INCUMBENT SOLUTION (not proven optimal)"))
     print("=" * 68)
     print(f"  Total annual cost: {total:>18,.0f} USD/yr   "
           f"({total/1e6:,.2f} M USD/yr)")

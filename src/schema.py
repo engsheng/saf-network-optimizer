@@ -53,7 +53,9 @@ class AirportDelivery(TypedDict):
 class Solution(TypedDict):
     status: Literal["optimal", "infeasible", "unbounded", "error"]
     solve_time_sec: float
-    optimality_gap: float          # 0.0 if proven optimal
+    # "proven_optimal" | "time_limited_incumbent" | None (not recorded)
+    optimality_status: Optional[str]
+    optimality_gap: Optional[float]  # relative MIP gap; None if unknown
     objective_value_usd: float     # == cost_breakdown.total_usd
     cost_breakdown: CostBreakdown
     facilities: List[Facility]

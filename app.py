@@ -72,7 +72,11 @@ st.caption(
 # 1. Total cost
 # ---------------------------------------------------------------------------
 total = solution["cost_breakdown"]["total_usd"]
-st.markdown("### Minimum total annual cost")
+opt_status = solution.get("optimality_status")
+gap = solution.get("optimality_gap")
+gap_txt = "unknown" if gap is None else f"{gap:.2%}"
+st.markdown("### Minimum total annual cost" if opt_status == "proven_optimal"
+            else "### Total annual cost (best found)")
 st.markdown(
     f"<div style='font-size:3.2rem;font-weight:700;color:#1f77b4;"
     f"line-height:1.1;margin:0.2rem 0 0.8rem 0;'>"
@@ -80,6 +84,15 @@ st.markdown(
     f"color:#888;'>per year</span></div>",
     unsafe_allow_html=True,
 )
+if opt_status == "proven_optimal":
+    st.caption(f"✅ Proven optimal (MIP gap {gap_txt}).")
+elif opt_status == "time_limited_incumbent":
+    st.warning(f"Solver hit its time limit: this is the best solution found, "
+               f"not proven optimal (MIP gap {gap_txt}). The true minimum "
+               f"may be up to that much lower.")
+else:
+    st.caption("Optimality not recorded for this solution. Re-run "
+               "`python run.py` to get a verified status.")
 
 # ---------------------------------------------------------------------------
 # 2. Facility counts
