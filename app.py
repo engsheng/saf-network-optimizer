@@ -147,7 +147,7 @@ st.caption(
     "Hover any arrow to see material and tonnes per year. "
     "Purple arrows are SAF barged to Tarakan."
 )
-st.pydeck_chart(build_map(solution, biomass, airports), use_container_width=True)
+st.pydeck_chart(build_map(solution, biomass, airports), width="stretch")
 
 # ---------------------------------------------------------------------------
 # 4. Coordinates
@@ -157,5 +157,5 @@ st.caption("Refineries first, then depots by throughput.")
 st.dataframe(
     coordinates_table(solution),
     hide_index=True,
-    use_container_width=True,
+    width="stretch",
 )

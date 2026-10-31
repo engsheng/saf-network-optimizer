@@ -14,6 +14,5 @@ openpyxl>=3.1
 numpy>=1.24
 
 # Dashboard (streamlit app.py)
-streamlit>=1.31
+streamlit>=1.50
 pydeck>=0.9
-plotly>=5.18
