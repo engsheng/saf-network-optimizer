@@ -2,10 +2,10 @@
 SAF Supply Chain Optimiser — dashboard.
 
 Four things on one page:
-  1. Total annual cost
+  1. Total annual cost + cost breakdown bar
   2. Facility counts by type and size
   3. Kalimantan map with hover-tooltips on arrows (showing material + tonnes)
-  4. Coordinates table
+  4. Coordinates table (click a row to highlight it on the map)
 
 Run:  python -m streamlit run app.py
 """
@@ -32,7 +32,6 @@ st.set_page_config(
 def _get_solution():
     if "solution" in st.session_state:
         return st.session_state.solution
-    # Fast paths: pre-solved results from CLI, or cache from a previous dashboard run
     if RESULTS_JSON_PATH.exists():
         try:
             st.session_state.solution = load_run_py_results(RESULTS_JSON_PATH)
@@ -43,7 +42,6 @@ def _get_solution():
     if cached is not None:
         st.session_state.solution = cached
         return cached
-    # First-run cold solve
     with st.status(
         "Solving the optimisation model… this happens once (about a minute). "
         "After this, the dashboard loads instantly.",
@@ -59,6 +57,16 @@ solution = _get_solution()
 airports = load_airports()
 biomass = load_biomass()
 
+# Read any current table-row selection from Streamlit widget state so the map
+# (drawn below, before the table) can highlight the selected facility.
+coords_df = coordinates_table(solution)
+_table_state = st.session_state.get("facility_table")
+highlight_id = None
+if _table_state is not None and getattr(_table_state, "selection", None):
+    rows = _table_state.selection.rows
+    if rows:
+        highlight_id = coords_df.iloc[rows[0]]["ID"]
+
 # ---------------------------------------------------------------------------
 # Header
 # ---------------------------------------------------------------------------
@@ -69,7 +77,7 @@ st.caption(
 )
 
 # ---------------------------------------------------------------------------
-# 1. Total cost
+# 1. Total cost + visible breakdown bar
 # ---------------------------------------------------------------------------
 total = solution["cost_breakdown"]["total_usd"]
 opt_status = solution.get("optimality_status")
@@ -94,7 +102,7 @@ else:
     st.caption("Optimality not recorded for this solution. Re-run "
                "`python run.py` to get a verified status.")
 
-# Compact breakdown: one thin stacked bar + a single legend line
+# Cost breakdown bar — 28px tall with inline dollar labels on wider slices.
 cb = solution["cost_breakdown"]
 parts = [
     ("Capex (annualised)", cb["capex_annualised_usd"], "#1f77b4"),
@@ -105,20 +113,31 @@ parts = [
 ]
 parts = [p for p in parts if p[1] > 0]
 denom = sum(v for _, v, _ in parts) or 1.0
-bar = "".join(
-    f"<div title='{name}: ${v/1e6:,.1f} M' "
-    f"style='width:{v/denom*100:.2f}%;background:{c};'></div>"
-    for name, v, c in parts
-)
+
+st.markdown("##### Cost breakdown")
+segments = []
+for name, v, c in parts:
+    pct = v / denom * 100
+    inner = (f"<span style='color:white;font-size:11px;font-weight:600;'>"
+             f"${v/1e6:,.0f}M</span>" if pct >= 8 else "")
+    segments.append(
+        f"<div title='{name}: ${v/1e6:,.1f} M ({pct:.1f}%)' "
+        f"style='width:{pct:.2f}%;background:{c};display:flex;"
+        f"align-items:center;justify-content:center;'>{inner}</div>"
+    )
+bar_html = "".join(segments)
 legend = " &nbsp;·&nbsp; ".join(
-    f"<span style='color:{c};'>■</span> {name} "
-    f"<b>${v/1e6:,.1f} M</b> <span style='color:#888;'>({v/denom:.0%})</span>"
+    f"<span style='color:{c};font-size:14px;'>■</span> "
+    f"<span style='color:#ccc;'>{name}</span> "
+    f"<b>${v/1e6:,.1f} M</b> "
+    f"<span style='color:#888;'>({v/denom:.0%})</span>"
     for name, v, c in parts
 )
 st.markdown(
-    f"<div style='display:flex;height:8px;border-radius:4px;overflow:hidden;"
-    f"max-width:900px;margin-bottom:0.4rem;'>{bar}</div>"
-    f"<div style='font-size:0.85rem;margin-bottom:0.8rem;'>{legend}</div>",
+    f"<div style='display:flex;height:28px;border-radius:6px;"
+    f"overflow:hidden;max-width:900px;margin:0.3rem 0;'>{bar_html}</div>"
+    f"<div style='font-size:0.9rem;margin-bottom:1rem;line-height:1.6;'>"
+    f"{legend}</div>",
     unsafe_allow_html=True,
 )
 
@@ -139,23 +158,34 @@ c3.metric("Large refineries", ref_L)
 c4.metric("Small refineries", ref_S)
 
 # ---------------------------------------------------------------------------
-# 3. Map
+# 3. Map (reads highlight_id from the table selection above)
 # ---------------------------------------------------------------------------
 st.markdown("### Network map")
 st.caption(
     "🟢 Biomass sites · 🟠 Depots · 🔴 Refineries · 🔵 Airports. "
-    "Hover any arrow to see material and tonnes per year. "
-    "Purple arrows are SAF barged to Tarakan."
+    "Hover any arrow for material and tonnes per year. "
+    "Purple arrows are SAF barged to Tarakan. "
+    "Click a row in the table below to highlight that facility with a gold ring."
 )
-st.pydeck_chart(build_map(solution, biomass, airports), width="stretch")
+st.pydeck_chart(
+    build_map(solution, biomass, airports, highlight_id=highlight_id),
+    width="stretch",
+)
+if highlight_id:
+    st.info(f"Highlighted on map: **{highlight_id}** — gold ring above. "
+            f"Click the same row again or press ESC to clear.")
 
 # ---------------------------------------------------------------------------
-# 4. Coordinates
+# 4. Coordinates (selectable; selection drives the map highlight above)
 # ---------------------------------------------------------------------------
 st.markdown("### Facility coordinates")
-st.caption("Refineries first, then depots by throughput.")
+st.caption("Click a row to highlight that facility on the map above. "
+           "Refineries first, then depots by throughput.")
 st.dataframe(
-    coordinates_table(solution),
+    coords_df,
     hide_index=True,
     width="stretch",
+    on_select="rerun",
+    selection_mode="single-row",
+    key="facility_table",
 )
