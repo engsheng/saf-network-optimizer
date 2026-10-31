@@ -72,13 +72,13 @@ falls back to CBC otherwise.
 
 ## Run
 
-Drop the organizer's biomass CSV at `data/biomass.csv`, then:
+The organizer's biomass CSV is included at `data/biomass.csv`, so just run:
 
 ```bash
 python run.py
 ```
 
-Without that file, the runner uses an 80-site synthetic layout for smoke
+If that file is missing, the runner uses an 80-site synthetic layout for smoke
 testing and prints a warning.
 
 Common options:
@@ -104,10 +104,14 @@ python run.py --threads 4
 
 | Code | Meaning |
 | --- | --- |
-| 0 | solved, all hard validation checks pass |
+| 0 | proven optimal, all hard validation checks pass |
 | 1 | solved but at least one hard validation check failed |
 | 2 | solver returned no incumbent, or model infeasible |
 | 3 | input file missing or malformed |
+| 4 | time limit reached: best solution found passes validation, but optimality is not proven (MIP gap still open) |
+
+The default time limit is 600 s. If you get exit code 4, re-run with a
+longer `--time-limit` (and `--threads`) to close the gap.
 
 ---
 
@@ -178,22 +182,29 @@ saf-network-optimizer/
 ├── README.md
 ├── requirements.txt
 ├── run.py                  entry-point CLI
-├── saf/
+├── app.py                  Streamlit dashboard
+├── saf/                    the optimisation model
 │   ├── __init__.py
 │   ├── distance.py         haversine × 1.3
 │   ├── data.py             loaders + synthetic biomass fallback
 │   ├── model.py            the MILP (PuLP)
 │   ├── validate.py         hard checks + insight warnings
-│   └── report.py           human summary + JSON extract
+│   └── report.py           human summary + JSON extract + optimality status
+├── src/                    dashboard support code
+│   ├── schema.py           Solution JSON contract read by the dashboard
+│   ├── data_loader.py      airports + biomass (via saf.data, so IDs match)
+│   ├── adapter.py          saf results → dashboard Solution dict
+│   └── visualizer.py       pydeck map, facility counts, coordinates table
 ├── tests/
 │   └── test_smoke.py       end-to-end on synthetic data
 └── data/
     ├── airports.csv        4-airport reference set
+    ├── biomass.csv         80 biomass sites
     └── parameters.xlsx     facilities, transport, assumptions
 ```
 
-Place the biomass CSV at `data/biomass.csv` for real runs; otherwise the
-synthetic fallback is used (and clearly flagged in the output).
+If `data/biomass.csv` is missing, the synthetic fallback is used (and
+clearly flagged in the output).
 
 ---
 
@@ -215,38 +226,42 @@ not an error.
 
 ---
 
-## License
-
-Public hackathon code; see `LICENSE` (to be added).
-
----
-
 ## Interactive dashboard
 
-A Streamlit dashboard renders the solved network: Kalimantan map with depots, refineries, airports and flow arcs; cost breakdown vs an import baseline; facility and flow tables; and CSV / JSON exports.
+A Streamlit dashboard shows the solved network on one page:
+
+1. **Total annual cost**, labelled as proven optimal or best-found (with
+   the MIP gap), plus a stacked bar breaking it into annualised CapEx,
+   fixed O&M, variable O&M, trucking and barge
+2. **Facilities built**: counts of large/small depots and refineries
+3. **Network map** of Kalimantan (Carto base map, no API token needed):
+   biomass sites, depots, refineries, airports and flow arcs. Hover any
+   arc for the material, tonnes per year and distance. Purple arcs are SAF
+   barged to Tarakan.
+4. **Facility coordinates** table: refineries first, then depots by
+   throughput
 
 ```bash
-pip install -r requirements.txt   # now includes streamlit, pydeck, plotly
+pip install -r requirements.txt
 streamlit run app.py
 ```
 
-Opens at `http://localhost:8501`. The dashboard tries three load paths in order:
+Opens at `http://localhost:8501`. The dashboard does not re-solve on its
+own; it loads the first solution it finds:
 
-1. `results.json` at the repo root (produced by `python run.py`) — instant
-2. `data/cached_solution.json` (written by the dashboard after every solve) — instant
-3. Fresh in-process solve via `src/adapter.solve()` (~60–120 s with HiGHS)
+1. `results.json` at the repo root (written by `python run.py`): instant
+2. `data/cached_solution.json` (written by a previous dashboard solve): instant
+3. Otherwise, a one-off in-process solve via `src/adapter.solve()`
+   (180 s time limit), cached for next time
 
-The sidebar's **▶ Re-solve** button re-runs the MILP with the current scenario (solver time limit, MIP gap, airport-candidate toggle).
+To show a new result, re-run `python run.py` and refresh the page
+(restart Streamlit if the old solution is still held in the session).
 
-### Layout added for the dashboard
+The dashboard calls directly into the `saf` package, so no model code is
+duplicated.
 
-```
-app.py              # Streamlit entry
-src/
-  schema.py         # Solution JSON contract read by the viz
-  data_loader.py    # Airports + biomass (delegates to saf.data for ID consistency)
-  adapter.py        # Wraps saf.build_model → dashboard Solution dict
-  visualizer.py     # pydeck map, plotly cost chart, tables
-```
+---
 
-The dashboard calls directly into the `saf` package — no code is duplicated.
+## License
+
+MIT; see [`LICENSE`](LICENSE).
