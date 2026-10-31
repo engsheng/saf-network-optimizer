@@ -1,0 +1,1524 @@
+{
+  "status": "optimal",
+  "solve_time_sec": 182.20128870010376,
+  "optimality_gap": 0.0,
+  "objective_value_usd": 896258662.4781564,
+  "cost_breakdown": {
+    "capex_annualised_usd": 234562500.00000003,
+    "fixed_opex_usd": 234562500.00000003,
+    "variable_opex_usd": 354111399.9999997,
+    "trucking_usd": 54644204.26296455,
+    "barge_usd": 18378058.21519218,
+    "total_usd": 896258662.4781564
+  },
+  "facilities": [
+    {
+      "id": "D-KAL_SUP_16",
+      "type": "depot",
+      "size": "Large",
+      "lat": -2.5858,
+      "lon": 112.7929,
+      "capacity_kt_in": 300.0,
+      "throughput_kt_in": 300.0,
+      "utilisation": 1.0,
+      "annualised_capex_usd": 225000.0,
+      "fixed_opex_usd": 225000.0,
+      "variable_opex_usd": 1200000.0
+    },
+    {
+      "id": "D-KAL_SUP_19",
+      "type": "depot",
+      "size": "Large",
+      "lat": -2.5394,
+      "lon": 112.8334,
+      "capacity_kt_in": 300.0,
+      "throughput_kt_in": 300.00000000000006,
+      "utilisation": 1.0,
+      "annualised_capex_usd": 225000.0,
+      "fixed_opex_usd": 225000.0,
+      "variable_opex_usd": 1200000.0000000002
+    },
+    {
+      "id": "D-KAL_SUP_21",
+      "type": "depot",
+      "size": "Large",
+      "lat": -2.1934,
+      "lon": 115.7592,
+      "capacity_kt_in": 300.0,
+      "throughput_kt_in": 300.0,
+      "utilisation": 1.0,
+      "annualised_capex_usd": 225000.0,
+      "fixed_opex_usd": 225000.0,
+      "variable_opex_usd": 1200000.0
+    },
+    {
+      "id": "D-KAL_SUP_24",
+      "type": "depot",
+      "size": "Large",
+      "lat": -1.8548,
+      "lon": 116.1854,
+      "capacity_kt_in": 300.0,
+      "throughput_kt_in": 300.00000000000017,
+      "utilisation": 1.0,
+      "annualised_capex_usd": 225000.0,
+      "fixed_opex_usd": 225000.0,
+      "variable_opex_usd": 1200000.0000000007
+    },
+    {
+      "id": "D-KAL_SUP_25",
+      "type": "depot",
+      "size": "Large",
+      "lat": 0.3297,
+      "lon": 110.817,
+      "capacity_kt_in": 300.0,
+      "throughput_kt_in": 300.0,
+      "utilisation": 1.0,
+      "annualised_capex_usd": 225000.0,
+      "fixed_opex_usd": 225000.0,
+      "variable_opex_usd": 1200000.0
+    },
+    {
+      "id": "D-KAL_SUP_29",
+      "type": "depot",
+      "size": "Large",
+      "lat": -1.6332,
+      "lon": 110.1275,
+      "capacity_kt_in": 300.0,
+      "throughput_kt_in": 300.00000000000125,
+      "utilisation": 1.0,
+      "annualised_capex_usd": 225000.0,
+      "fixed_opex_usd": 225000.0,
+      "variable_opex_usd": 1200000.000000005
+    },
+    {
+      "id": "D-KAL_SUP_30",
+      "type": "depot",
+      "size": "Large",
+      "lat": -0.3435,
+      "lon": 117.0175,
+      "capacity_kt_in": 300.0,
+      "throughput_kt_in": 300.00000000000017,
+      "utilisation": 1.0,
+      "annualised_capex_usd": 225000.0,
+      "fixed_opex_usd": 225000.0,
+      "variable_opex_usd": 1200000.0000000007
+    },
+    {
+      "id": "D-KAL_SUP_35",
+      "type": "depot",
+      "size": "Large",
+      "lat": -1.6283,
+      "lon": 110.2045,
+      "capacity_kt_in": 300.0,
+      "throughput_kt_in": 188.2199999999995,
+      "utilisation": 0.6273999999999983,
+      "annualised_capex_usd": 225000.0,
+      "fixed_opex_usd": 225000.0,
+      "variable_opex_usd": 752879.9999999979
+    },
+    {
+      "id": "D-KAL_SUP_38",
+      "type": "depot",
+      "size": "Large",
+      "lat": -0.3295,
+      "lon": 117.0183,
+      "capacity_kt_in": 300.0,
+      "throughput_kt_in": 300.00000000000045,
+      "utilisation": 1.0,
+      "annualised_capex_usd": 225000.0,
+      "fixed_opex_usd": 225000.0,
+      "variable_opex_usd": 1200000.0000000019
+    },
+    {
+      "id": "D-KAL_SUP_41",
+      "type": "depot",
+      "size": "Large",
+      "lat": -1.7119,
+      "lon": 110.0077,
+      "capacity_kt_in": 300.0,
+      "throughput_kt_in": 298.77999999999616,
+      "utilisation": 0.9959333333333206,
+      "annualised_capex_usd": 225000.0,
+      "fixed_opex_usd": 225000.0,
+      "variable_opex_usd": 1195119.9999999846
+    },
+    {
+      "id": "D-KAL_SUP_44",
+      "type": "depot",
+      "size": "Small",
+      "lat": -0.3668,
+      "lon": 116.8975,
+      "capacity_kt_in": 150.0,
+      "throughput_kt_in": 111.40000000000096,
+      "utilisation": 0.742666666666673,
+      "annualised_capex_usd": 112500.0,
+      "fixed_opex_usd": 112500.0,
+      "variable_opex_usd": 557000.0000000048
+    },
+    {
+      "id": "D-KAL_SUP_46",
+      "type": "depot",
+      "size": "Large",
+      "lat": 0.2625,
+      "lon": 110.7212,
+      "capacity_kt_in": 300.0,
+      "throughput_kt_in": 187.0,
+      "utilisation": 0.6233333333333333,
+      "annualised_capex_usd": 225000.0,
+      "fixed_opex_usd": 225000.0,
+      "variable_opex_usd": 748000.0
+    },
+    {
+      "id": "D-KAL_SUP_47",
+      "type": "depot",
+      "size": "Large",
+      "lat": -2.4623,
+      "lon": 113.0832,
+      "capacity_kt_in": 300.0,
+      "throughput_kt_in": 46.60000000000019,
+      "utilisation": 0.155333333333334,
+      "annualised_capex_usd": 225000.0,
+      "fixed_opex_usd": 225000.0,
+      "variable_opex_usd": 186400.0000000008
+    },
+    {
+      "id": "D-KAL_SUP_48",
+      "type": "depot",
+      "size": "Large",
+      "lat": -1.6378,
+      "lon": 110.0902,
+      "capacity_kt_in": 300.0,
+      "throughput_kt_in": 300.0000000000001,
+      "utilisation": 1.0,
+      "annualised_capex_usd": 225000.0,
+      "fixed_opex_usd": 225000.0,
+      "variable_opex_usd": 1200000.0000000005
+    },
+    {
+      "id": "D-KAL_SUP_49",
+      "type": "depot",
+      "size": "Large",
+      "lat": -2.6715,
+      "lon": 111.589,
+      "capacity_kt_in": 300.0,
+      "throughput_kt_in": 300.0000000000012,
+      "utilisation": 1.0,
+      "annualised_capex_usd": 225000.0,
+      "fixed_opex_usd": 225000.0,
+      "variable_opex_usd": 1200000.000000005
+    },
+    {
+      "id": "D-KAL_SUP_61",
+      "type": "depot",
+      "size": "Large",
+      "lat": -2.0292,
+      "lon": 116.2806,
+      "capacity_kt_in": 300.0,
+      "throughput_kt_in": 206.72999999999968,
+      "utilisation": 0.6890999999999989,
+      "annualised_capex_usd": 225000.0,
+      "fixed_opex_usd": 225000.0,
+      "variable_opex_usd": 826919.9999999987
+    },
+    {
+      "id": "D-KAL_SUP_65",
+      "type": "depot",
+      "size": "Large",
+      "lat": -2.5395,
+      "lon": 111.7025,
+      "capacity_kt_in": 300.0,
+      "throughput_kt_in": 187.00000000000247,
+      "utilisation": 0.6233333333333416,
+      "annualised_capex_usd": 225000.0,
+      "fixed_opex_usd": 225000.0,
+      "variable_opex_usd": 748000.0000000099
+    },
+    {
+      "id": "D-KAL_SUP_66",
+      "type": "depot",
+      "size": "Large",
+      "lat": -0.3758,
+      "lon": 117.121,
+      "capacity_kt_in": 300.0,
+      "throughput_kt_in": 274.26999999999873,
+      "utilisation": 0.9142333333333291,
+      "annualised_capex_usd": 225000.0,
+      "fixed_opex_usd": 225000.0,
+      "variable_opex_usd": 1097079.9999999949
+    },
+    {
+      "id": "D-KAL_SUP_67",
+      "type": "depot",
+      "size": "Large",
+      "lat": -2.6718,
+      "lon": 111.704,
+      "capacity_kt_in": 300.0,
+      "throughput_kt_in": 300.00000000000045,
+      "utilisation": 1.0,
+      "annualised_capex_usd": 225000.0,
+      "fixed_opex_usd": 225000.0,
+      "variable_opex_usd": 1200000.0000000019
+    },
+    {
+      "id": "D-KAL_SUP_71",
+      "type": "depot",
+      "size": "Large",
+      "lat": -2.4114,
+      "lon": 112.9518,
+      "capacity_kt_in": 300.0,
+      "throughput_kt_in": 299.99999999999994,
+      "utilisation": 0.9999999999999998,
+      "annualised_capex_usd": 225000.0,
+      "fixed_opex_usd": 225000.0,
+      "variable_opex_usd": 1199999.9999999998
+    },
+    {
+      "id": "D-KAL_SUP_74",
+      "type": "depot",
+      "size": "Large",
+      "lat": 0.2713,
+      "lon": 111.0006,
+      "capacity_kt_in": 300.0,
+      "throughput_kt_in": 300.0,
+      "utilisation": 1.0,
+      "annualised_capex_usd": 225000.0,
+      "fixed_opex_usd": 225000.0,
+      "variable_opex_usd": 1200000.0
+    },
+    {
+      "id": "D-KAL_SUP_75",
+      "type": "depot",
+      "size": "Large",
+      "lat": 0.1668,
+      "lon": 110.9547,
+      "capacity_kt_in": 300.0,
+      "throughput_kt_in": 300.0,
+      "utilisation": 1.0,
+      "annualised_capex_usd": 225000.0,
+      "fixed_opex_usd": 225000.0,
+      "variable_opex_usd": 1200000.0
+    },
+    {
+      "id": "D-AIR_PKN",
+      "type": "depot",
+      "size": "Large",
+      "lat": -2.70519995689,
+      "lon": 111.672996521,
+      "capacity_kt_in": 300.0,
+      "throughput_kt_in": 299.99999999999795,
+      "utilisation": 0.9999999999999932,
+      "annualised_capex_usd": 225000.0,
+      "fixed_opex_usd": 225000.0,
+      "variable_opex_usd": 1199999.9999999919
+    },
+    {
+      "id": "R-KAL_SUP_19",
+      "type": "refinery",
+      "size": "Large",
+      "lat": -2.5394,
+      "lon": 112.8334,
+      "capacity_kt_in": 1087.0,
+      "throughput_kt_in": 946.6000000000001,
+      "utilisation": 0.8708371665133396,
+      "annualised_capex_usd": 38250000.0,
+      "fixed_opex_usd": 38250000.0,
+      "variable_opex_usd": 52063000.00000001
+    },
+    {
+      "id": "R-KAL_SUP_24",
+      "type": "refinery",
+      "size": "Large",
+      "lat": -1.8548,
+      "lon": 116.1854,
+      "capacity_kt_in": 1087.0,
+      "throughput_kt_in": 806.7299999999997,
+      "utilisation": 0.7421619135234587,
+      "annualised_capex_usd": 38250000.0,
+      "fixed_opex_usd": 38250000.0,
+      "variable_opex_usd": 44370149.99999998
+    },
+    {
+      "id": "R-KAL_SUP_29",
+      "type": "refinery",
+      "size": "Large",
+      "lat": -1.6332,
+      "lon": 110.1275,
+      "capacity_kt_in": 1087.0,
+      "throughput_kt_in": 1086.9999999999968,
+      "utilisation": 0.9999999999999971,
+      "annualised_capex_usd": 38250000.0,
+      "fixed_opex_usd": 38250000.0,
+      "variable_opex_usd": 59784999.99999982
+    },
+    {
+      "id": "R-KAL_SUP_30",
+      "type": "refinery",
+      "size": "Large",
+      "lat": -0.3435,
+      "lon": 117.0175,
+      "capacity_kt_in": 1087.0,
+      "throughput_kt_in": 985.6699999999992,
+      "utilisation": 0.9067801287948475,
+      "annualised_capex_usd": 38250000.0,
+      "fixed_opex_usd": 38250000.0,
+      "variable_opex_usd": 54211849.999999955
+    },
+    {
+      "id": "R-KAL_SUP_74",
+      "type": "refinery",
+      "size": "Large",
+      "lat": 0.2713,
+      "lon": 111.0006,
+      "capacity_kt_in": 1087.0,
+      "throughput_kt_in": 1087.0,
+      "utilisation": 1.0,
+      "annualised_capex_usd": 38250000.0,
+      "fixed_opex_usd": 38250000.0,
+      "variable_opex_usd": 59785000.0
+    },
+    {
+      "id": "R-AIR_PKN",
+      "type": "refinery",
+      "size": "Large",
+      "lat": -2.70519995689,
+      "lon": 111.672996521,
+      "capacity_kt_in": 1087.0,
+      "throughput_kt_in": 1087.0000000000002,
+      "utilisation": 1.0,
+      "annualised_capex_usd": 38250000.0,
+      "fixed_opex_usd": 38250000.0,
+      "variable_opex_usd": 59785000.000000015
+    }
+  ],
+  "flows": [
+    {
+      "from_id": "KAL_SUP_01",
+      "to_id": "D-KAL_SUP_29",
+      "stage": "farm_to_depot",
+      "tonnes": 45699.99999999745,
+      "distance_km": 47.78820761159708,
+      "cost_usd": 218392.10878498649,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_01",
+      "to_id": "D-KAL_SUP_49",
+      "stage": "farm_to_depot",
+      "tonnes": 44420.00000000095,
+      "distance_km": 236.40036687444874,
+      "cost_usd": 1050090.4296563237,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_02",
+      "to_id": "D-AIR_PKN",
+      "stage": "farm_to_depot",
+      "tonnes": 96599.99999999919,
+      "distance_km": 87.32078922543248,
+      "cost_usd": 843518.8239176706,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_04",
+      "to_id": "D-KAL_SUP_24",
+      "stage": "farm_to_depot",
+      "tonnes": 99220.0,
+      "distance_km": 39.186787399642945,
+      "cost_usd": 388811.3045792573,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_05",
+      "to_id": "D-KAL_SUP_71",
+      "stage": "farm_to_depot",
+      "tonnes": 90460.00000000022,
+      "distance_km": 62.44565895256975,
+      "cost_usd": 564883.4308849474,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_06",
+      "to_id": "D-KAL_SUP_29",
+      "stage": "farm_to_depot",
+      "tonnes": 72880.00000000323,
+      "distance_km": 34.22094817525652,
+      "cost_usd": 249402.27030128054,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_06",
+      "to_id": "D-KAL_SUP_48",
+      "stage": "farm_to_depot",
+      "tonnes": 15029.999999997011,
+      "distance_km": 31.6397523440436,
+      "cost_usd": 47554.54777308808,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_07",
+      "to_id": "D-KAL_SUP_49",
+      "stage": "farm_to_depot",
+      "tonnes": 89060.00000000004,
+      "distance_km": 201.9483842454334,
+      "cost_usd": 1798552.3100898308,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_08",
+      "to_id": "D-KAL_SUP_25",
+      "stage": "farm_to_depot",
+      "tonnes": 94000.0,
+      "distance_km": 18.745154468233558,
+      "cost_usd": 176204.45200139546,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_09",
+      "to_id": "D-KAL_SUP_65",
+      "stage": "farm_to_depot",
+      "tonnes": 5650.000000001707,
+      "distance_km": 41.896551450867534,
+      "cost_usd": 23671.55156974731,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_09",
+      "to_id": "D-KAL_SUP_67",
+      "stage": "farm_to_depot",
+      "tonnes": 20679.99999999829,
+      "distance_km": 60.32160261549333,
+      "cost_usd": 124745.0742088299,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_10",
+      "to_id": "D-KAL_SUP_30",
+      "stage": "farm_to_depot",
+      "tonnes": 99510.0,
+      "distance_km": 52.6551332603852,
+      "cost_usd": 523971.23107409314,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_11",
+      "to_id": "D-KAL_SUP_66",
+      "stage": "farm_to_depot",
+      "tonnes": 92159.99999999955,
+      "distance_km": 50.01806679470179,
+      "cost_usd": 460966.50357996946,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_12",
+      "to_id": "D-KAL_SUP_16",
+      "stage": "farm_to_depot",
+      "tonnes": 13809.999999999916,
+      "distance_km": 27.786265637201684,
+      "cost_usd": 38372.832844975295,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_12",
+      "to_id": "D-KAL_SUP_19",
+      "stage": "farm_to_depot",
+      "tonnes": 79990.00000000009,
+      "distance_km": 32.54234602834111,
+      "cost_usd": 260306.22588070083,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_13",
+      "to_id": "D-KAL_SUP_38",
+      "stage": "farm_to_depot",
+      "tonnes": 92810.00000000189,
+      "distance_km": 21.619592282800568,
+      "cost_usd": 200651.43597667618,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_14",
+      "to_id": "D-KAL_SUP_49",
+      "stage": "farm_to_depot",
+      "tonnes": 29340.00000000061,
+      "distance_km": 212.62174797242494,
+      "cost_usd": 623832.2085511078,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_15",
+      "to_id": "D-KAL_SUP_35",
+      "stage": "farm_to_depot",
+      "tonnes": 88320.0,
+      "distance_km": 29.67190737832988,
+      "cost_usd": 262062.2859654095,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_16",
+      "to_id": "D-KAL_SUP_16",
+      "stage": "farm_to_depot",
+      "tonnes": 98250.0,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_17",
+      "to_id": "D-KAL_SUP_38",
+      "stage": "farm_to_depot",
+      "tonnes": 68739.99999999868,
+      "distance_km": 31.658777515282644,
+      "cost_usd": 217622.4366400487,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_17",
+      "to_id": "D-KAL_SUP_44",
+      "stage": "farm_to_depot",
+      "tonnes": 19530.00000000081,
+      "distance_km": 13.563619304062408,
+      "cost_usd": 26489.748500834983,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_19",
+      "to_id": "D-KAL_SUP_19",
+      "stage": "farm_to_depot",
+      "tonnes": 99710.0,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_20",
+      "to_id": "D-AIR_PKN",
+      "stage": "farm_to_depot",
+      "tonnes": 34100.00000000004,
+      "distance_km": 63.50371946685057,
+      "cost_usd": 216547.6833819607,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_21",
+      "to_id": "D-KAL_SUP_21",
+      "stage": "farm_to_depot",
+      "tonnes": 90650.0,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_23",
+      "to_id": "D-KAL_SUP_74",
+      "stage": "farm_to_depot",
+      "tonnes": 8260.000000000147,
+      "distance_km": 98.64425846694756,
+      "cost_usd": 81480.15749370016,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_23",
+      "to_id": "D-KAL_SUP_75",
+      "stage": "farm_to_depot",
+      "tonnes": 84259.99999999999,
+      "distance_km": 85.41078461452209,
+      "cost_usd": 719671.271161963,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_24",
+      "to_id": "D-KAL_SUP_24",
+      "stage": "farm_to_depot",
+      "tonnes": 96520.0,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_25",
+      "to_id": "D-KAL_SUP_25",
+      "stage": "farm_to_depot",
+      "tonnes": 88000.0,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_26",
+      "to_id": "D-KAL_SUP_61",
+      "stage": "farm_to_depot",
+      "tonnes": 93860.0,
+      "distance_km": 359.85255110233356,
+      "cost_usd": 3377576.0446465034,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_27",
+      "to_id": "D-KAL_SUP_65",
+      "stage": "farm_to_depot",
+      "tonnes": 93250.00000000079,
+      "distance_km": 83.06725658527749,
+      "cost_usd": 774602.1676577191,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_28",
+      "to_id": "D-KAL_SUP_67",
+      "stage": "farm_to_depot",
+      "tonnes": 88600.0,
+      "distance_km": 61.405708409614526,
+      "cost_usd": 544054.5765091847,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_29",
+      "to_id": "D-KAL_SUP_29",
+      "stage": "farm_to_depot",
+      "tonnes": 88409.99999999997,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_30",
+      "to_id": "D-KAL_SUP_30",
+      "stage": "farm_to_depot",
+      "tonnes": 99810.0,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_32",
+      "to_id": "D-KAL_SUP_41",
+      "stage": "farm_to_depot",
+      "tonnes": 80029.99999999935,
+      "distance_km": 32.01612330178099,
+      "cost_usd": 256225.0347841512,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_32",
+      "to_id": "D-KAL_SUP_48",
+      "stage": "farm_to_depot",
+      "tonnes": 12010.00000000153,
+      "distance_km": 43.95429253150414,
+      "cost_usd": 52789.1053303432,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_33",
+      "to_id": "D-KAL_SUP_16",
+      "stage": "farm_to_depot",
+      "tonnes": 96690.00000000009,
+      "distance_km": 19.284177768291833,
+      "cost_usd": 186458.7148416139,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_34",
+      "to_id": "D-KAL_SUP_25",
+      "stage": "farm_to_depot",
+      "tonnes": 26300.00000000002,
+      "distance_km": 81.42138844579256,
+      "cost_usd": 214138.2516124346,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_34",
+      "to_id": "D-KAL_SUP_46",
+      "stage": "farm_to_depot",
+      "tonnes": 5690.000000000083,
+      "distance_km": 66.80227402885929,
+      "cost_usd": 38010.49392242149,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_35",
+      "to_id": "D-KAL_SUP_35",
+      "stage": "farm_to_depot",
+      "tonnes": 99899.99999999949,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_36",
+      "to_id": "D-KAL_SUP_16",
+      "stage": "farm_to_depot",
+      "tonnes": 91250.0,
+      "distance_km": 27.43536135552464,
+      "cost_usd": 250347.67236916238,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_37",
+      "to_id": "D-KAL_SUP_41",
+      "stage": "farm_to_depot",
+      "tonnes": 30699.99999999616,
+      "distance_km": 46.23713552523498,
+      "cost_usd": 141948.00606245364,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_38",
+      "to_id": "D-KAL_SUP_38",
+      "stage": "farm_to_depot",
+      "tonnes": 23620.0,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_39",
+      "to_id": "D-KAL_SUP_74",
+      "stage": "farm_to_depot",
+      "tonnes": 95760.0,
+      "distance_km": 52.08665161773127,
+      "cost_usd": 498781.77589139465,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_40",
+      "to_id": "D-KAL_SUP_75",
+      "stage": "farm_to_depot",
+      "tonnes": 22840.0,
+      "distance_km": 89.96858037334334,
+      "cost_usd": 205488.2375727162,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_41",
+      "to_id": "D-KAL_SUP_41",
+      "stage": "farm_to_depot",
+      "tonnes": 91080.0,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_42",
+      "to_id": "D-KAL_SUP_46",
+      "stage": "farm_to_depot",
+      "tonnes": 85119.99999999988,
+      "distance_km": 59.96495204859845,
+      "cost_usd": 510421.67183766933,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_42",
+      "to_id": "D-KAL_SUP_74",
+      "stage": "farm_to_depot",
+      "tonnes": 3639.999999999901,
+      "distance_km": 99.38751157506317,
+      "cost_usd": 36177.054213322015,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_43",
+      "to_id": "D-KAL_SUP_48",
+      "stage": "farm_to_depot",
+      "tonnes": 87960.0,
+      "distance_km": 46.973426060892464,
+      "cost_usd": 413178.2556316101,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_44",
+      "to_id": "D-KAL_SUP_44",
+      "stage": "farm_to_depot",
+      "tonnes": 91870.00000000015,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_45",
+      "to_id": "D-KAL_SUP_19",
+      "stage": "farm_to_depot",
+      "tonnes": 78300.0000000001,
+      "distance_km": 77.93102163392003,
+      "cost_usd": 610199.8993935947,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_45",
+      "to_id": "D-KAL_SUP_71",
+      "stage": "farm_to_depot",
+      "tonnes": 16249.9999999999,
+      "distance_km": 54.91840773258824,
+      "cost_usd": 89242.41256545535,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_46",
+      "to_id": "D-KAL_SUP_46",
+      "stage": "farm_to_depot",
+      "tonnes": 96190.00000000001,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_47",
+      "to_id": "D-KAL_SUP_19",
+      "stage": "farm_to_depot",
+      "tonnes": 41999.99999999978,
+      "distance_km": 37.75740301989585,
+      "cost_usd": 158581.09268356173,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_47",
+      "to_id": "D-KAL_SUP_47",
+      "stage": "farm_to_depot",
+      "tonnes": 46600.000000000226,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_48",
+      "to_id": "D-KAL_SUP_48",
+      "stage": "farm_to_depot",
+      "tonnes": 88949.99999999991,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_49",
+      "to_id": "D-KAL_SUP_49",
+      "stage": "farm_to_depot",
+      "tonnes": 94090.0,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_51",
+      "to_id": "D-KAL_SUP_29",
+      "stage": "farm_to_depot",
+      "tonnes": 93010.0,
+      "distance_km": 47.1242834246149,
+      "cost_usd": 438302.9601323432,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_52",
+      "to_id": "D-KAL_SUP_24",
+      "stage": "farm_to_depot",
+      "tonnes": 90570.00000000007,
+      "distance_km": 62.86079981211218,
+      "cost_usd": 569330.2638983005,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_53",
+      "to_id": "D-KAL_SUP_25",
+      "stage": "farm_to_depot",
+      "tonnes": 91700.0,
+      "distance_km": 70.97928255056186,
+      "cost_usd": 650880.0209886524,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_54",
+      "to_id": "D-KAL_SUP_30",
+      "stage": "farm_to_depot",
+      "tonnes": 92830.00000000173,
+      "distance_km": 53.514519423967265,
+      "cost_usd": 496775.28381269745,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_55",
+      "to_id": "D-KAL_SUP_38",
+      "stage": "farm_to_depot",
+      "tonnes": 89759.99999999846,
+      "distance_km": 72.04556610447585,
+      "cost_usd": 646681.0013537642,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_56",
+      "to_id": "D-KAL_SUP_21",
+      "stage": "farm_to_depot",
+      "tonnes": 89470.0,
+      "distance_km": 6.1091596226912515,
+      "cost_usd": 54658.65114421863,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_57",
+      "to_id": "D-KAL_SUP_38",
+      "stage": "farm_to_depot",
+      "tonnes": 25070.0,
+      "distance_km": 44.98523102754178,
+      "cost_usd": 112777.97418604724,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_58",
+      "to_id": "D-KAL_SUP_41",
+      "stage": "farm_to_depot",
+      "tonnes": 96970.0,
+      "distance_km": 28.37707771874889,
+      "cost_usd": 275172.522638708,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_59",
+      "to_id": "D-KAL_SUP_21",
+      "stage": "farm_to_depot",
+      "tonnes": 26750.0,
+      "distance_km": 297.63156833465393,
+      "cost_usd": 796164.4452951993,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_59",
+      "to_id": "D-KAL_SUP_24",
+      "stage": "farm_to_depot",
+      "tonnes": 13689.99999999998,
+      "distance_km": 372.566884502519,
+      "cost_usd": 510044.0648839478,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_59",
+      "to_id": "D-KAL_SUP_61",
+      "stage": "farm_to_depot",
+      "tonnes": 23109.999999999927,
+      "distance_km": 361.0748746163914,
+      "cost_usd": 834444.035238478,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_60",
+      "to_id": "D-KAL_SUP_21",
+      "stage": "farm_to_depot",
+      "tonnes": 93130.0,
+      "distance_km": 238.76122497784615,
+      "cost_usd": 2223583.2882186812,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_61",
+      "to_id": "D-KAL_SUP_61",
+      "stage": "farm_to_depot",
+      "tonnes": 89759.99999999994,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_62",
+      "to_id": "D-KAL_SUP_48",
+      "stage": "farm_to_depot",
+      "tonnes": 96050.0,
+      "distance_km": 51.26859379215991,
+      "cost_usd": 492434.84337369597,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_63",
+      "to_id": "D-KAL_SUP_74",
+      "stage": "farm_to_depot",
+      "tonnes": 92730.0,
+      "distance_km": 29.06594011539579,
+      "cost_usd": 269528.46269006515,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_64",
+      "to_id": "D-KAL_SUP_67",
+      "stage": "farm_to_depot",
+      "tonnes": 41080.00000000227,
+      "distance_km": 46.8423975359148,
+      "cost_usd": 192428.56907754863,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_64",
+      "to_id": "D-AIR_PKN",
+      "stage": "farm_to_depot",
+      "tonnes": 48319.99999999841,
+      "distance_km": 51.53017564718236,
+      "cost_usd": 248993.80872717698,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_65",
+      "to_id": "D-KAL_SUP_65",
+      "stage": "farm_to_depot",
+      "tonnes": 88100.0,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_66",
+      "to_id": "D-KAL_SUP_66",
+      "stage": "farm_to_depot",
+      "tonnes": 98639.99999999953,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_67",
+      "to_id": "D-KAL_SUP_67",
+      "stage": "farm_to_depot",
+      "tonnes": 89300.0,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_68",
+      "to_id": "D-KAL_SUP_49",
+      "stage": "farm_to_depot",
+      "tonnes": 12100.000000001748,
+      "distance_km": 42.679651612453334,
+      "cost_usd": 51642.378451075994,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_68",
+      "to_id": "D-AIR_PKN",
+      "stage": "farm_to_depot",
+      "tonnes": 23840.000000000196,
+      "distance_km": 53.90308168407607,
+      "cost_usd": 128504.94673483842,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_69",
+      "to_id": "D-KAL_SUP_49",
+      "stage": "farm_to_depot",
+      "tonnes": 30990.0,
+      "distance_km": 241.51285743085447,
+      "cost_usd": 748448.3451782181,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_71",
+      "to_id": "D-KAL_SUP_71",
+      "stage": "farm_to_depot",
+      "tonnes": 93870.0,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_72",
+      "to_id": "D-KAL_SUP_71",
+      "stage": "farm_to_depot",
+      "tonnes": 99419.99999999983,
+      "distance_km": 18.945812455437615,
+      "cost_usd": 188359.26743196044,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_73",
+      "to_id": "D-KAL_SUP_75",
+      "stage": "farm_to_depot",
+      "tonnes": 99030.0,
+      "distance_km": 82.54594874932151,
+      "cost_usd": 817452.5304645309,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_74",
+      "to_id": "D-KAL_SUP_74",
+      "stage": "farm_to_depot",
+      "tonnes": 99610.0,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_75",
+      "to_id": "D-KAL_SUP_75",
+      "stage": "farm_to_depot",
+      "tonnes": 93870.0,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_76",
+      "to_id": "D-KAL_SUP_67",
+      "stage": "farm_to_depot",
+      "tonnes": 27790.0,
+      "distance_km": 73.01344612681281,
+      "cost_usd": 202904.3667864128,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_77",
+      "to_id": "D-KAL_SUP_30",
+      "stage": "farm_to_depot",
+      "tonnes": 7849.999999999148,
+      "distance_km": 64.21714728060292,
+      "cost_usd": 50410.46061526782,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_77",
+      "to_id": "D-KAL_SUP_66",
+      "stage": "farm_to_depot",
+      "tonnes": 83469.99999999965,
+      "distance_km": 59.63653966879386,
+      "cost_usd": 497786.1966154203,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_78",
+      "to_id": "D-AIR_PKN",
+      "stage": "farm_to_depot",
+      "tonnes": 97140.0,
+      "distance_km": 61.15987519386051,
+      "cost_usd": 594107.027633161,
+      "mode": "truck"
+    },
+    {
+      "from_id": "KAL_SUP_79",
+      "to_id": "D-KAL_SUP_67",
+      "stage": "farm_to_depot",
+      "tonnes": 32549.99999999999,
+      "distance_km": 52.26284611917411,
+      "cost_usd": 170115.56411791168,
+      "mode": "truck"
+    },
+    {
+      "from_id": "D-KAL_SUP_16",
+      "to_id": "R-KAL_SUP_19",
+      "stage": "depot_to_refinery",
+      "tonnes": 300000.00000000006,
+      "distance_km": 8.899056690613964,
+      "cost_usd": 320366.04086210276,
+      "mode": "truck"
+    },
+    {
+      "from_id": "D-KAL_SUP_19",
+      "to_id": "R-KAL_SUP_19",
+      "stage": "depot_to_refinery",
+      "tonnes": 300000.0,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    },
+    {
+      "from_id": "D-KAL_SUP_21",
+      "to_id": "R-KAL_SUP_24",
+      "stage": "depot_to_refinery",
+      "tonnes": 300000.0,
+      "distance_km": 78.65475611312456,
+      "cost_usd": 2831571.220072484,
+      "mode": "truck"
+    },
+    {
+      "from_id": "D-KAL_SUP_24",
+      "to_id": "R-KAL_SUP_24",
+      "stage": "depot_to_refinery",
+      "tonnes": 300000.0,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    },
+    {
+      "from_id": "D-KAL_SUP_25",
+      "to_id": "R-KAL_SUP_74",
+      "stage": "depot_to_refinery",
+      "tonnes": 300000.0,
+      "distance_km": 27.849926890444763,
+      "cost_usd": 1002597.3680560114,
+      "mode": "truck"
+    },
+    {
+      "from_id": "D-KAL_SUP_29",
+      "to_id": "R-KAL_SUP_29",
+      "stage": "depot_to_refinery",
+      "tonnes": 300000.0000000002,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    },
+    {
+      "from_id": "D-KAL_SUP_30",
+      "to_id": "R-KAL_SUP_30",
+      "stage": "depot_to_refinery",
+      "tonnes": 299999.99999999977,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    },
+    {
+      "from_id": "D-KAL_SUP_35",
+      "to_id": "R-KAL_SUP_29",
+      "stage": "depot_to_refinery",
+      "tonnes": 188220.00000000125,
+      "distance_km": 11.14862762097359,
+      "cost_usd": 251807.36289835954,
+      "mode": "truck"
+    },
+    {
+      "from_id": "D-KAL_SUP_38",
+      "to_id": "R-KAL_SUP_30",
+      "stage": "depot_to_refinery",
+      "tonnes": 300000.0000000011,
+      "distance_km": 2.02704893614405,
+      "cost_usd": 72973.76170118607,
+      "mode": "truck"
+    },
+    {
+      "from_id": "D-KAL_SUP_41",
+      "to_id": "R-KAL_SUP_29",
+      "stage": "depot_to_refinery",
+      "tonnes": 298779.9999999955,
+      "distance_km": 20.713802401547163,
+      "cost_usd": 742664.3857841002,
+      "mode": "truck"
+    },
+    {
+      "from_id": "D-KAL_SUP_44",
+      "to_id": "R-KAL_SUP_30",
+      "stage": "depot_to_refinery",
+      "tonnes": 111400.00000000096,
+      "distance_km": 17.670041996386836,
+      "cost_usd": 236213.12140770126,
+      "mode": "truck"
+    },
+    {
+      "from_id": "D-KAL_SUP_46",
+      "to_id": "R-KAL_SUP_74",
+      "stage": "depot_to_refinery",
+      "tonnes": 186999.99999999994,
+      "distance_km": 40.40781086117038,
+      "cost_usd": 906751.275724663,
+      "mode": "truck"
+    },
+    {
+      "from_id": "D-KAL_SUP_47",
+      "to_id": "R-KAL_SUP_19",
+      "stage": "depot_to_refinery",
+      "tonnes": 46600.0000000002,
+      "distance_km": 37.75740301989585,
+      "cost_usd": 211139.39768725846,
+      "mode": "truck"
+    },
+    {
+      "from_id": "D-KAL_SUP_48",
+      "to_id": "R-KAL_SUP_29",
+      "stage": "depot_to_refinery",
+      "tonnes": 299999.99999999977,
+      "distance_km": 5.430509288364285,
+      "cost_usd": 195498.3343811141,
+      "mode": "truck"
+    },
+    {
+      "from_id": "D-KAL_SUP_49",
+      "to_id": "R-AIR_PKN",
+      "stage": "depot_to_refinery",
+      "tonnes": 300000.0,
+      "distance_km": 13.070362695789807,
+      "cost_usd": 470533.05704843305,
+      "mode": "truck"
+    },
+    {
+      "from_id": "D-KAL_SUP_61",
+      "to_id": "R-KAL_SUP_24",
+      "stage": "depot_to_refinery",
+      "tonnes": 206729.99999999968,
+      "distance_km": 28.71777595528729,
+      "cost_usd": 712419.0987883839,
+      "mode": "truck"
+    },
+    {
+      "from_id": "D-KAL_SUP_65",
+      "to_id": "R-AIR_PKN",
+      "stage": "depot_to_refinery",
+      "tonnes": 187000.0000000009,
+      "distance_km": 24.328431727213967,
+      "cost_usd": 545930.007958684,
+      "mode": "truck"
+    },
+    {
+      "from_id": "D-KAL_SUP_66",
+      "to_id": "R-KAL_SUP_30",
+      "stage": "depot_to_refinery",
+      "tonnes": 274269.99999999825,
+      "distance_km": 15.672627617379359,
+      "cost_usd": 515823.7891942331,
+      "mode": "truck"
+    },
+    {
+      "from_id": "D-KAL_SUP_67",
+      "to_id": "R-AIR_PKN",
+      "stage": "depot_to_refinery",
+      "tonnes": 300000.0,
+      "distance_km": 6.584178237078404,
+      "cost_usd": 237030.41653482252,
+      "mode": "truck"
+    },
+    {
+      "from_id": "D-KAL_SUP_71",
+      "to_id": "R-KAL_SUP_19",
+      "stage": "depot_to_refinery",
+      "tonnes": 300000.0,
+      "distance_km": 25.193963919290177,
+      "cost_usd": 906982.7010944464,
+      "mode": "truck"
+    },
+    {
+      "from_id": "D-KAL_SUP_74",
+      "to_id": "R-KAL_SUP_74",
+      "stage": "depot_to_refinery",
+      "tonnes": 300000.00000000006,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    },
+    {
+      "from_id": "D-KAL_SUP_75",
+      "to_id": "R-KAL_SUP_74",
+      "stage": "depot_to_refinery",
+      "tonnes": 300000.0,
+      "distance_km": 16.49874873808962,
+      "cost_usd": 593954.9545712263,
+      "mode": "truck"
+    },
+    {
+      "from_id": "D-AIR_PKN",
+      "to_id": "R-AIR_PKN",
+      "stage": "depot_to_refinery",
+      "tonnes": 299999.99999999924,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    },
+    {
+      "from_id": "R-KAL_SUP_19",
+      "to_id": "PKN",
+      "stage": "refinery_to_airport",
+      "tonnes": 82600.0,
+      "distance_km": 169.2698897955224,
+      "cost_usd": 1118535.431768812,
+      "mode": "truck"
+    },
+    {
+      "from_id": "R-KAL_SUP_19",
+      "to_id": "BPN",
+      "stage": "refinery_to_airport",
+      "tonnes": 106720.00000000013,
+      "distance_km": 614.7402217055579,
+      "cost_usd": 5248406.116833379,
+      "mode": "truck"
+    },
+    {
+      "from_id": "R-KAL_SUP_24",
+      "to_id": "BPN",
+      "stage": "refinery_to_airport",
+      "tonnes": 161345.99999999983,
+      "distance_km": 132.93806868911352,
+      "cost_usd": 1715922.050457095,
+      "mode": "truck"
+    },
+    {
+      "from_id": "R-KAL_SUP_29",
+      "to_id": "PNK",
+      "stage": "refinery_to_airport",
+      "tonnes": 217399.99999999997,
+      "distance_km": 238.45050418388007,
+      "cost_usd": 4147131.1687660413,
+      "mode": "truck"
+    },
+    {
+      "from_id": "R-KAL_SUP_30",
+      "to_id": "BPN",
+      "stage": "refinery_to_airport",
+      "tonnes": 31933.999999999807,
+      "distance_km": 134.86524151978136,
+      "cost_usd": 344542.92981541384,
+      "mode": "truck"
+    },
+    {
+      "from_id": "R-KAL_SUP_30",
+      "to_id": "TRK",
+      "stage": "refinery_to_airport",
+      "tonnes": 165200.00000000006,
+      "distance_km": 536.4948690375911,
+      "cost_usd": 7090316.189200806,
+      "mode": "barge"
+    },
+    {
+      "from_id": "R-KAL_SUP_74",
+      "to_id": "PNK",
+      "stage": "refinery_to_airport",
+      "tonnes": 82600.00000000006,
+      "distance_km": 238.71946118737296,
+      "cost_usd": 1577458.1995261617,
+      "mode": "truck"
+    },
+    {
+      "from_id": "R-KAL_SUP_74",
+      "to_id": "TRK",
+      "stage": "refinery_to_airport",
+      "tonnes": 134799.99999999994,
+      "distance_km": 1046.7119831223458,
+      "cost_usd": 11287742.025991373,
+      "mode": "barge"
+    },
+    {
+      "from_id": "R-AIR_PKN",
+      "to_id": "PKN",
+      "stage": "refinery_to_airport",
+      "tonnes": 217400.0,
+      "distance_km": 0.0,
+      "cost_usd": 0.0,
+      "mode": "truck"
+    }
+  ],
+  "airport_delivery": [
+    {
+      "iata": "PNK",
+      "demand_kt": 300.0,
+      "delivered_kt": 300.00000000000006,
+      "sources": [
+        "R-KAL_SUP_29",
+        "R-KAL_SUP_74"
+      ]
+    },
+    {
+      "iata": "PKN",
+      "demand_kt": 300.0,
+      "delivered_kt": 300.0,
+      "sources": [
+        "R-AIR_PKN",
+        "R-KAL_SUP_19"
+      ]
+    },
+    {
+      "iata": "BPN",
+      "demand_kt": 300.0,
+      "delivered_kt": 299.9999999999999,
+      "sources": [
+        "R-KAL_SUP_19",
+        "R-KAL_SUP_24",
+        "R-KAL_SUP_30"
+      ]
+    },
+    {
+      "iata": "TRK",
+      "demand_kt": 300.0,
+      "delivered_kt": 300.0,
+      "sources": [
+        "R-KAL_SUP_30",
+        "R-KAL_SUP_74"
+      ]
+    }
+  ],
+  "notes": "Solved in 182.2s with HiGHS. 1 insight warning(s): refinery opened at airport candidate AIR_PKN (size Large); the 7.5x insight predicts this should be rare -- inspect the biomass distribution around PKN"
+}
