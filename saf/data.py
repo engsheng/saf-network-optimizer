@@ -166,11 +166,17 @@ def load_biomass(path: PathLike) -> List[Farm]:
 
     lat_c = pick(["latitude", "lat", "y"])
     lon_c = pick(["longitude", "lon", "lng", "long", "x"])
+    # "production_kilotons" is the organizer's name in the
+    # kalimantan_80_locations_6800kt_full_range.csv file.
     kt_c = pick([
+        "production_kilotons",
         "biomass_kt_per_year", "biomass_kt_year", "biomass_kt",
         "biomass", "kt_per_year", "kt",
     ])
-    id_c = pick(["id", "farm_id", "site_id", "name"], required=False)
+    id_c = pick(
+        ["location_id", "id", "farm_id", "site_id", "name"],
+        required=False,
+    )
 
     farms: List[Farm] = []
     for i, r in df.iterrows():
