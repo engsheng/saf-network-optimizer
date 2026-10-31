@@ -1,39 +1,67 @@
 """
 Map and coordinate table for the simplified dashboard.
 
-- Base map: Carto (free, no API token required). Shows Kalimantan's coastline,
-  country borders and major place names underneath the markers.
-- Tooltips: plain text with newlines (no HTML), so no stray `<b>` tags.
+- Base map: Carto (free, no API token).
+- Tooltips: plain text with newlines rendered via CSS white-space: pre-line.
+- Facility markers: split into separate layers so Large/Small have distinct
+  colours, radii and pixel caps. Pixel caps prevent markers from engulfing
+  the map when zoomed in.
 """
 
-from typing import Dict, Any
+from typing import Dict, Any, List
 import pandas as pd
 import pydeck as pdk
 
 
-# Palette (consistent across markers and arcs)
+# Colour palette.
+# Hue encodes TYPE (red = refinery, orange = depot, blue = airport, green = biomass).
+# Saturation encodes SIZE (strong = Large, pale = Small).
 COLOUR = {
-    "biomass_used":   [34, 139, 34, 180],    # green
+    "refinery_large": [178, 34, 52,  240],   # firebrick
+    "refinery_small": [255, 120, 140, 220],  # salmon
+    "depot_large":    [255, 140, 0,   235],  # dark orange
+    "depot_small":    [255, 195, 110, 215],  # light orange
+    "airport":        [30, 144, 255,  240],  # dodger blue
+    "biomass_used":   [34, 139, 34,   180],  # forest green
     "biomass_unused": [120, 120, 120, 60],   # faded grey
-    "depot":          [255, 140, 0, 230],    # orange
-    "refinery":       [220, 20, 60, 240],    # crimson
-    "airport":        [30, 144, 255, 240],   # blue
-    "arc_biomass":    [34, 139, 34],         # green
-    "arc_pre":        [255, 140, 0],         # orange
-    "arc_saf":        [220, 20, 60],         # red
-    "arc_barge":      [138, 43, 226],        # purple
+    # Arc colours
+    "arc_biomass":    [34, 139, 34],
+    "arc_pre":        [255, 140, 0],
+    "arc_saf":        [220, 20, 60],
+    "arc_barge":      [138, 43, 226],
+}
+
+# Marker sizing. radius_m is a nominal size in metres; max_px is the hard cap
+# in screen pixels so the marker never grows larger than this when zoomed in.
+MARKER = {
+    "refinery_large": {"radius_m": 18000, "max_px": 60, "stroke_px": 3},
+    "refinery_small": {"radius_m": 10000, "max_px": 35, "stroke_px": 2},
+    "depot_large":    {"radius_m": 11000, "max_px": 36, "stroke_px": 2},
+    "depot_small":    {"radius_m":  6000, "max_px": 20, "stroke_px": 1},
+    "airport":        {"radius_m": 15000, "max_px": 44, "stroke_px": 3},
+    "biomass":        {"max_px":   16, "min_px": 3},
 }
 
 VIEW = pdk.ViewState(latitude=0.0, longitude=114.0, zoom=5.3, pitch=35)
 
 
-def _facility_rows(solution: Dict[str, Any]) -> pd.DataFrame:
+# ---------------------------------------------------------------------------
+# Helpers to build per-category DataFrames
+# ---------------------------------------------------------------------------
+
+def _facility_rows(solution: Dict[str, Any],
+                   facility_type: str,
+                   size: str) -> pd.DataFrame:
+    """Rows for one (type, size) combo. Empty frame if none built."""
+    key = f"{facility_type}_{size.lower()}"
     rows = []
     for f in solution["facilities"]:
+        if f["type"] != facility_type or f["size"] != size:
+            continue
         rows.append({
             "lat": f["lat"], "lon": f["lon"],
-            "colour": COLOUR[f["type"]],
-            "radius": 15000 if f["size"] == "Large" else 9000,
+            "colour": COLOUR[key],
+            "radius": MARKER[key]["radius_m"],
             "tooltip": (
                 f"{f['id']}\n"
                 f"{f['type'].title()} ({f['size']})\n"
@@ -74,7 +102,7 @@ def _airport_rows(airports: pd.DataFrame, solution: Dict[str, Any]) -> pd.DataFr
         rows.append({
             "lat": a.latitude, "lon": a.longitude,
             "colour": COLOUR["airport"],
-            "radius": 20000,
+            "radius": MARKER["airport"]["radius_m"],
             "tooltip": (
                 f"{a.iata} — {a['name']}\n"
                 f"SAF: {d['delivered_kt']:.1f} / {d['demand_kt']:.0f} kt·yr "
@@ -87,7 +115,6 @@ def _airport_rows(airports: pd.DataFrame, solution: Dict[str, Any]) -> pd.DataFr
 def _arc_rows(solution: Dict[str, Any],
               biomass: pd.DataFrame,
               airports: pd.DataFrame) -> pd.DataFrame:
-    """One row per flow. Includes a tooltip with the material and tonnage."""
     bio = biomass.set_index("site_id")[["latitude", "longitude"]].to_dict("index")
     air = airports.set_index("iata")[["latitude", "longitude"]].to_dict("index")
     fac = {f["id"]: (f["lat"], f["lon"]) for f in solution["facilities"]}
@@ -103,26 +130,20 @@ def _arc_rows(solution: Dict[str, Any],
 
     rows = []
     for f in solution["flows"]:
-        if f["tonnes"] < 1:            # hide noise
-            continue
-        if f["distance_km"] < 0.5:     # hide co-located nodes
+        if f["tonnes"] < 1 or f["distance_km"] < 0.5:
             continue
         src = coords(f["from_id"])
         dst = coords(f["to_id"])
         if src is None or dst is None:
             continue
         if f["mode"] == "barge":
-            colour = COLOUR["arc_barge"]
-            material = "SAF (barge)"
+            colour, material = COLOUR["arc_barge"], "SAF (barge)"
         elif f["stage"] == "farm_to_depot":
-            colour = COLOUR["arc_biomass"]
-            material = "biomass"
+            colour, material = COLOUR["arc_biomass"], "biomass"
         elif f["stage"] == "depot_to_refinery":
-            colour = COLOUR["arc_pre"]
-            material = "biomass"
+            colour, material = COLOUR["arc_pre"], "biomass"
         else:
-            colour = COLOUR["arc_saf"]
-            material = "SAF"
+            colour, material = COLOUR["arc_saf"], "SAF"
         kt = f["tonnes"] / 1000.0
         rows.append({
             "from_lat": src[0], "from_lon": src[1],
@@ -138,41 +159,75 @@ def _arc_rows(solution: Dict[str, Any],
     return pd.DataFrame(rows)
 
 
+# ---------------------------------------------------------------------------
+# Deck
+# ---------------------------------------------------------------------------
+
+def _scatter(data: pd.DataFrame, max_px: int, min_px: int = 2,
+             stroke_px: int = 0) -> pdk.Layer:
+    """Shared ScatterplotLayer builder with pixel caps for zoom-safety."""
+    kwargs = dict(
+        type="ScatterplotLayer", data=data,
+        get_position="[lon, lat]",
+        get_fill_color="colour", get_radius="radius",
+        radius_min_pixels=min_px,
+        radius_max_pixels=max_px,
+        pickable=True,
+    )
+    if stroke_px:
+        kwargs.update(
+            stroked=True,
+            get_line_color=[255, 255, 255],
+            line_width_min_pixels=stroke_px,
+        )
+    return pdk.Layer(**kwargs)
+
+
 def build_map(solution: Dict[str, Any],
               biomass: pd.DataFrame,
               airports: pd.DataFrame) -> pdk.Deck:
-    """pydeck Deck with Carto base map (no API token required)."""
-    layers = [
-        pdk.Layer(
-            "ScatterplotLayer", data=_biomass_rows(biomass, solution),
-            get_position="[longitude, latitude]",
-            get_fill_color="colour", get_radius="radius",
-            pickable=True, opacity=0.7,
-        ),
-        pdk.Layer(
-            "ArcLayer", data=_arc_rows(solution, biomass, airports),
-            get_source_position="[from_lon, from_lat]",
-            get_target_position="[to_lon, to_lat]",
-            get_source_color="colour", get_target_color="colour",
-            get_width="width", pickable=True,
-        ),
-        pdk.Layer(
-            "ScatterplotLayer", data=_facility_rows(solution),
-            get_position="[lon, lat]",
-            get_fill_color="colour", get_radius="radius",
-            pickable=True, stroked=True,
-            get_line_color=[255, 255, 255], line_width_min_pixels=2,
-        ),
-        pdk.Layer(
-            "ScatterplotLayer", data=_airport_rows(airports, solution),
-            get_position="[lon, lat]",
-            get_fill_color="colour", get_radius="radius",
-            pickable=True, stroked=True,
-            get_line_color=[255, 255, 255], line_width_min_pixels=2,
-        ),
-    ]
-    # Plain-text tooltip. white-space: pre-line respects the \n in the text,
-    # so the three-line format from `tooltip` fields renders as separate lines.
+    layers: List[pdk.Layer] = []
+
+    # Biomass behind everything else, with a smaller pixel cap
+    bio_df = _biomass_rows(biomass, solution)
+    bio_df = bio_df.rename(columns={"latitude": "lat", "longitude": "lon"})
+    layers.append(_scatter(
+        bio_df,
+        max_px=MARKER["biomass"]["max_px"],
+        min_px=MARKER["biomass"]["min_px"],
+    ))
+
+    # Arcs between biomass and facility layers so markers sit on top
+    arc_df = _arc_rows(solution, biomass, airports)
+    layers.append(pdk.Layer(
+        "ArcLayer", data=arc_df,
+        get_source_position="[from_lon, from_lat]",
+        get_target_position="[to_lon, to_lat]",
+        get_source_color="colour", get_target_color="colour",
+        get_width="width", pickable=True,
+    ))
+
+    # Four facility layers so each (type, size) has its own radius/colour/cap.
+    # Order: Small on bottom, Large on top (so Large doesn't get hidden).
+    for ftype, fsize in (("depot", "Small"), ("depot", "Large"),
+                         ("refinery", "Small"), ("refinery", "Large")):
+        df = _facility_rows(solution, ftype, fsize)
+        if df.empty:
+            continue
+        key = f"{ftype}_{fsize.lower()}"
+        layers.append(_scatter(
+            df,
+            max_px=MARKER[key]["max_px"],
+            stroke_px=MARKER[key]["stroke_px"],
+        ))
+
+    # Airports on top of everything
+    layers.append(_scatter(
+        _airport_rows(airports, solution),
+        max_px=MARKER["airport"]["max_px"],
+        stroke_px=MARKER["airport"]["stroke_px"],
+    ))
+
     tooltip = {
         "text": "{tooltip}",
         "style": {
@@ -184,7 +239,6 @@ def build_map(solution: Dict[str, Any],
             "whiteSpace": "pre-line",
         },
     }
-    # Carto's "dark_matter" / "positron" tilesets are free (no API token).
     return pdk.Deck(
         layers=layers,
         initial_view_state=VIEW,
@@ -195,11 +249,10 @@ def build_map(solution: Dict[str, Any],
 
 
 # ---------------------------------------------------------------------------
-# Simple tables
+# Tables for the simplified dashboard
 # ---------------------------------------------------------------------------
 
 def facility_counts(solution: Dict[str, Any]) -> dict:
-    """{('depot','Large'): 15, …}"""
     counts = {}
     for f in solution["facilities"]:
         counts[(f["type"], f["size"])] = counts.get((f["type"], f["size"]), 0) + 1
@@ -207,7 +260,6 @@ def facility_counts(solution: Dict[str, Any]) -> dict:
 
 
 def coordinates_table(solution: Dict[str, Any]) -> pd.DataFrame:
-    """Refineries first, then depots by throughput descending."""
     rows = []
     for f in solution["facilities"]:
         rows.append({
