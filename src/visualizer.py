@@ -1,8 +1,9 @@
 """
 Map and coordinate table for the simplified dashboard.
 
-Every data row carries a `tooltip` field with a human-readable description,
-so hovering any marker or arrow shows "150 kt biomass · from X to Y" cleanly.
+- Base map: Carto (free, no API token required). Shows Kalimantan's coastline,
+  country borders and major place names underneath the markers.
+- Tooltips: plain text with newlines (no HTML), so no stray `<b>` tags.
 """
 
 from typing import Dict, Any
@@ -10,7 +11,7 @@ import pandas as pd
 import pydeck as pdk
 
 
-# Palette (consistent colours across markers and arcs)
+# Palette (consistent across markers and arcs)
 COLOUR = {
     "biomass_used":   [34, 139, 34, 180],    # green
     "biomass_unused": [120, 120, 120, 60],   # faded grey
@@ -30,15 +31,14 @@ def _facility_rows(solution: Dict[str, Any]) -> pd.DataFrame:
     rows = []
     for f in solution["facilities"]:
         rows.append({
-            "id": f["id"],
             "lat": f["lat"], "lon": f["lon"],
             "colour": COLOUR[f["type"]],
             "radius": 15000 if f["size"] == "Large" else 9000,
             "tooltip": (
-                f"<b>{f['id']}</b><br/>"
-                f"{f['type'].title()} ({f['size']})<br/>"
+                f"{f['id']}\n"
+                f"{f['type'].title()} ({f['size']})\n"
                 f"Throughput: {f['throughput_kt_in']:.1f} / "
-                f"{f['capacity_kt_in']:.0f} kt·yr<br/>"
+                f"{f['capacity_kt_in']:.0f} kt·yr\n"
                 f"Lat {f['lat']:.4f}, Lon {f['lon']:.4f}"
             ),
         })
@@ -56,8 +56,8 @@ def _biomass_rows(biomass: pd.DataFrame, solution: Dict[str, Any]) -> pd.DataFra
     df["radius"] = df["capacity_kt_per_year"] * 60
     df["tooltip"] = df.apply(
         lambda r: (
-            f"<b>{r.site_id}</b> (biomass site)<br/>"
-            f"Available: {r.capacity_kt_per_year:.1f} kt/yr<br/>"
+            f"{r.site_id} (biomass site)\n"
+            f"Available: {r.capacity_kt_per_year:.1f} kt/yr\n"
             f"{'In use' if r.used else 'Not used'}"
         ), axis=1,
     )
@@ -72,12 +72,11 @@ def _airport_rows(airports: pd.DataFrame, solution: Dict[str, Any]) -> pd.DataFr
                                    "delivered_kt": 0})
         met = d["delivered_kt"] + 1e-3 >= d["demand_kt"]
         rows.append({
-            "iata": a.iata,
             "lat": a.latitude, "lon": a.longitude,
             "colour": COLOUR["airport"],
             "radius": 20000,
             "tooltip": (
-                f"<b>{a.iata}</b> — {a['name']}<br/>"
+                f"{a.iata} — {a['name']}\n"
                 f"SAF: {d['delivered_kt']:.1f} / {d['demand_kt']:.0f} kt·yr "
                 f"{'✓' if met else '✗ short'}"
             ),
@@ -106,13 +105,12 @@ def _arc_rows(solution: Dict[str, Any],
     for f in solution["flows"]:
         if f["tonnes"] < 1:            # hide noise
             continue
-        if f["distance_km"] < 0.5:     # hide zero-distance (co-located nodes)
+        if f["distance_km"] < 0.5:     # hide co-located nodes
             continue
         src = coords(f["from_id"])
         dst = coords(f["to_id"])
         if src is None or dst is None:
             continue
-        # Material + colour by stage
         if f["mode"] == "barge":
             colour = COLOUR["arc_barge"]
             material = "SAF (barge)"
@@ -130,11 +128,10 @@ def _arc_rows(solution: Dict[str, Any],
             "from_lat": src[0], "from_lon": src[1],
             "to_lat": dst[0],   "to_lon": dst[1],
             "colour": colour,
-            # Width grows with volume; clamped so refinery→airport doesn't swamp
             "width": min(8.0, max(0.6, kt / 50.0)),
             "tooltip": (
-                f"<b>{kt:,.1f} kt·yr {material}</b><br/>"
-                f"{f['from_id']} → {f['to_id']}<br/>"
+                f"{kt:,.1f} kt·yr {material}\n"
+                f"{f['from_id']} → {f['to_id']}\n"
                 f"{f['distance_km']:.0f} km"
             ),
         })
@@ -144,7 +141,7 @@ def _arc_rows(solution: Dict[str, Any],
 def build_map(solution: Dict[str, Any],
               biomass: pd.DataFrame,
               airports: pd.DataFrame) -> pdk.Deck:
-    """Build the pydeck Deck used by st.pydeck_chart."""
+    """pydeck Deck with Carto base map (no API token required)."""
     layers = [
         pdk.Layer(
             "ScatterplotLayer", data=_biomass_rows(biomass, solution),
@@ -174,21 +171,25 @@ def build_map(solution: Dict[str, Any],
             get_line_color=[255, 255, 255], line_width_min_pixels=2,
         ),
     ]
-    # One universal tooltip — reads the `tooltip` field we set on every row.
+    # Plain-text tooltip. white-space: pre-line respects the \n in the text,
+    # so the three-line format from `tooltip` fields renders as separate lines.
     tooltip = {
-        "html": "{tooltip}",
+        "text": "{tooltip}",
         "style": {
             "backgroundColor": "#1e1e1e",
             "color": "white",
             "fontSize": "13px",
-            "padding": "6px 10px",
-            "borderRadius": "4px",
+            "padding": "8px 12px",
+            "borderRadius": "6px",
+            "whiteSpace": "pre-line",
         },
     }
+    # Carto's "dark_matter" / "positron" tilesets are free (no API token).
     return pdk.Deck(
         layers=layers,
         initial_view_state=VIEW,
-        map_style="mapbox://styles/mapbox/dark-v10",
+        map_provider="carto",
+        map_style="dark",
         tooltip=tooltip,
     )
 
@@ -198,17 +199,15 @@ def build_map(solution: Dict[str, Any],
 # ---------------------------------------------------------------------------
 
 def facility_counts(solution: Dict[str, Any]) -> dict:
-    """Count depots and refineries by size: {('depot','Large'): 15, ...}."""
+    """{('depot','Large'): 15, …}"""
     counts = {}
     for f in solution["facilities"]:
-        key = (f["type"], f["size"])
-        counts[key] = counts.get(key, 0) + 1
+        counts[(f["type"], f["size"])] = counts.get((f["type"], f["size"]), 0) + 1
     return counts
 
 
 def coordinates_table(solution: Dict[str, Any]) -> pd.DataFrame:
-    """Flat table of every facility: ID, type, size, lat, lon.
-    Sorted refineries first, then depots by throughput descending."""
+    """Refineries first, then depots by throughput descending."""
     rows = []
     for f in solution["facilities"]:
         rows.append({
@@ -220,7 +219,6 @@ def coordinates_table(solution: Dict[str, Any]) -> pd.DataFrame:
             "Throughput (kt/yr)": round(f["throughput_kt_in"], 1),
         })
     df = pd.DataFrame(rows)
-    # Sort so refineries come first, then depots by throughput descending
     df["_order"] = df.apply(
         lambda r: (0 if r.Type == "Refinery" else 1, -r["Throughput (kt/yr)"]),
         axis=1,
