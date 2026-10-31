@@ -17,7 +17,7 @@ from .data import (
 from .distance import haversine_km, road_km, ROAD_FACTOR
 from .model import build_model
 from .validate import validate_solution, insight_warnings
-from .report import print_summary, extract_results
+from .report import print_summary, extract_results, optimality_status, mip_gap_rel
 
 __all__ = [
     "YIELD", "CAPEX_YEARS", "ROAD_FACTOR",
@@ -26,5 +26,5 @@ __all__ = [
     "load_biomass", "synthetic_biomass",
     "haversine_km", "road_km",
     "build_model", "validate_solution", "insight_warnings",
-    "print_summary", "extract_results",
+    "print_summary", "extract_results", "optimality_status", "mip_gap_rel",
 ]

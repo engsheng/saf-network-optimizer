@@ -25,6 +25,7 @@ from saf import (
     YIELD, CAPEX_YEARS,
     build_model, extract_results,
     insight_warnings, validate_solution as validate_milp,
+    mip_gap_rel, optimality_status,
     load_airports as load_airports_saf,
     load_biomass as load_biomass_saf,
     load_facilities, load_transport,
@@ -87,7 +88,7 @@ def translate(
     status_name: str = "optimal",
     solver_name: str = "unknown",
     solve_time_sec: float | None = None,
-    optimality_gap: float = 0.0,
+    optimality_gap: float | None = None,
     throughput_tol_kt: float = 0.01,
 ) -> Dict[str, Any]:
     """
@@ -242,7 +243,11 @@ def translate(
     return {
         "status": "optimal" if status_name.lower() == "optimal" else status_name.lower(),
         "solve_time_sec": solve_time_sec if solve_time_sec is not None else 0.0,
-        "optimality_gap": optimality_gap,
+        # PuLP's status says "Optimal" for time-limited incumbents too, so the
+        # real verdict comes from saf.report (None = not recorded, e.g. old files).
+        "optimality_status": results.get("optimality_status"),
+        "optimality_gap": (optimality_gap if optimality_gap is not None
+                           else results.get("mip_gap_rel")),
         "objective_value_usd": total,
         "cost_breakdown": {
             "capex_annualised_usd": capex_annualised,
@@ -321,7 +326,9 @@ def solve(
             "notes": f"Solver returned {status_name!r} with no incumbent.",
         }
 
-    raw = extract_results(built, farms, airports)
+    raw = extract_results(built, farms, airports,
+                          optimality_status=optimality_status(built["model"]),
+                          mip_gap_rel=mip_gap_rel(built["model"]))
     raw["meta"] = {
         "status": status_name,
         "solver": solver_name,

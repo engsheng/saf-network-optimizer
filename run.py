@@ -13,6 +13,8 @@ Exit codes
     1  solved but at least one validation check flagged an issue
     2  solver returned no incumbent, or infeasible
     3  input-file error
+    4  time limit reached: incumbent found and validated, but optimality
+       not proven (MIP gap still open)
 """
 
 from __future__ import annotations
@@ -29,6 +31,8 @@ from saf import (
     build_model,
     extract_results,
     insight_warnings,
+    mip_gap_rel,
+    optimality_status,
     load_airports,
     load_biomass,
     load_facilities,
@@ -179,23 +183,32 @@ def main() -> int:
     # Interpret solver status
     # ------------------------------------------------------------------
     obj = pulp.value(model.objective)
+    opt_status = optimality_status(model)
+    gap = mip_gap_rel(model)
+    gap_txt = "gap unknown" if gap is None else f"gap {gap:.2%}"
     if status == pulp.LpStatusInfeasible:
+        print("[solve]  no feasible solution found")
         print("ERROR: model is infeasible. Check supply vs demand "
               "and farm/depot/refinery capacities.", file=sys.stderr)
         return 2
-    if obj is None:
+    if obj is None or opt_status == "no_solution":
+        print("[solve]  no feasible solution found")
         print(f"ERROR: solver status {status_name!r} and no incumbent "
               f"solution available.", file=sys.stderr)
         return 2
-    if status != pulp.LpStatusOptimal:
-        print(f"[solve]  WARNING: status is '{status_name}', not 'Optimal'. "
-              f"Reporting incumbent (may be sub-optimal).")
+    if opt_status == "proven_optimal":
+        print(f"[solve]  proven optimal in {solve_s:.1f}s ({gap_txt})")
+    else:
+        print(f"[solve]  time limit reached; incumbent found (gap not proven, "
+              f"{gap_txt}) after {solve_s:.1f}s of {args.time_limit}s limit")
 
     # ------------------------------------------------------------------
     # Report and validate
     # ------------------------------------------------------------------
-    print_summary(built, farms, airports)
-    results = extract_results(built, farms, airports)
+    print_summary(built, farms, airports,
+                  optimality_status=opt_status, mip_gap_rel=gap)
+    results = extract_results(built, farms, airports,
+                              optimality_status=opt_status, mip_gap_rel=gap)
     results["meta"] = {
         "status": status_name,
         "solver": solver_name,
@@ -228,7 +241,7 @@ def main() -> int:
 
     print("\n[check]  all hard validation checks passed"
           + (f" ({len(warnings)} insight warnings)" if warnings else ""))
-    return 0
+    return 0 if opt_status == "proven_optimal" else 4
 
 
 if __name__ == "__main__":

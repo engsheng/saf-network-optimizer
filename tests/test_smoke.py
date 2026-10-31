@@ -16,7 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import pulp
 
 from saf import (
-    build_model, extract_results,
+    build_model, extract_results, optimality_status, mip_gap_rel,
     load_airports, load_facilities, load_transport,
     synthetic_biomass, validate_solution,
     YIELD,
@@ -61,22 +61,33 @@ def test_end_to_end_synthetic():
     # Prefer HiGHS (faster) but fall back to bundled CBC.
     # Loose gap tolerance so the smoke test stays fast; the real run.py
     # defaults to 1% gap.
+    gap_tol = 0.10
     try:
-        solver = pulp.HiGHS(msg=False, timeLimit=90, gapRel=0.10, threads=4)
+        solver = pulp.HiGHS(msg=False, timeLimit=90, gapRel=gap_tol, threads=4)
         if not solver.available():
             raise RuntimeError
     except Exception:
-        solver = pulp.PULP_CBC_CMD(msg=False, timeLimit=120, gapRel=0.10)
+        solver = pulp.PULP_CBC_CMD(msg=False, timeLimit=120, gapRel=gap_tol)
     status = built["model"].solve(solver)
-    # PuLP maps "feasible-with-time-limit" to Optimal, which is good enough
-    # for smoke-testing the pipeline. The important checks are below.
+    # PuLP maps "feasible-with-time-limit" to Optimal, so check sol_status
+    # via optimality_status() too. The important checks are below.
     assert pulp.value(built["model"].objective) is not None, \
         f"no incumbent (status={pulp.LpStatus[status]})"
+    opt_status = optimality_status(built["model"])
+    gap = mip_gap_rel(built["model"])
+    assert opt_status != "no_solution", opt_status
+    # Don't require proven optimality; a time-limited incumbent is fine as
+    # long as its gap is within the test's tolerance.
+    assert opt_status == "proven_optimal" or (gap is not None and gap <= gap_tol), \
+        (opt_status, gap)
 
     issues = validate_solution(built, farms, airports)
     assert not issues, "\n".join(issues)
 
-    results = extract_results(built, farms, airports)
+    results = extract_results(built, farms, airports,
+                              optimality_status=opt_status, mip_gap_rel=gap)
+    assert results["optimality_status"] == opt_status
+    assert results["mip_gap_rel"] == gap
     # Every airport receives its full 300 kt.
     for a in results["airport_receipts"]:
         assert abs(a["received_kt"] - a["demand_kt"]) < 1e-3
