@@ -64,7 +64,7 @@ biomass = load_biomass()
 # ---------------------------------------------------------------------------
 st.title("SAF Supply Chain Optimiser — Kalimantan")
 st.caption(
-    "Siting depots and refineries across Kalimantan to meet 1,200 kt·yr of "
+    "Siting depots and refineries across Kalimantan to meet 1,200 kt/yr of "
     "SAF demand at PNK, PKN, BPN and TRK."
 )
 
@@ -87,7 +87,8 @@ st.markdown(
 if opt_status == "proven_optimal":
     st.caption(f"✅ Proven optimal (MIP gap {gap_txt}).")
 elif opt_status == "time_limited_incumbent":
-    st.caption(f"Within {gap_txt} of the theoretical minimum.")
+    st.caption(f"Within {gap_txt} of the theoretical minimum." if gap is not None
+               else "Best solution found within the solver time limit.")
 else:
     st.caption("Optimality not recorded for this solution. Re-run "
                "`python run.py` to get a verified status.")

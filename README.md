@@ -230,8 +230,8 @@ not an error.
 
 A Streamlit dashboard shows the solved network on one page:
 
-1. **Total annual cost**, labelled as proven optimal or best-found (with
-   the MIP gap), plus a stacked bar breaking it into annualised CapEx,
+1. **Total annual cost**, labelled as proven optimal or as the best
+   solution found within the time limit (with the MIP gap), plus a stacked bar breaking it into annualised CapEx,
    fixed O&M, variable O&M, trucking and barge
 2. **Facilities built**: counts of large/small depots and refineries
 3. **Network map** of Kalimantan (Carto base map, no API token needed):
