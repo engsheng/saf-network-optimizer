@@ -8,6 +8,8 @@ Design docs:
 - [Design Approach](https://claude.ai/artifact/EApVyiiWJWf8J74AaNH3Qu) — the core economic insight (refineries belong near depots, not near airports) and expected solution structure
 - [Modeling Assumptions](https://claude.ai/artifact/2xDHn7mQdNdtQ7orN2umQZ) — every parameter choice, including why altitude is excluded
 
+![](images/frontcover1.png)
+![](images/frontcover2.png)
 ---
 
 ## What it does
